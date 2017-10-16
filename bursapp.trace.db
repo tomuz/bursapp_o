@@ -1,0 +1,8 @@
+2017-10-15 19:36:42 jdbc[7]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "USER" no encontrada
+Table "USER" not found; SQL statement:
+insert into user (id, dateCreated, username, lastUpdated, password) values (null, ?, ?, ?, ?) [42102-196]
+2017-10-15 19:36:42 jdbc[7]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "USER" no encontrada
+Table "USER" not found; SQL statement:
+insert into user (id, dateCreated, username, lastUpdated, password) values (null, ?, ?, ?, ?) [42102-196]

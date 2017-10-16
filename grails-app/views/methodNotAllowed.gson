@@ -1,0 +1,6 @@
+response.status 405
+
+json {    
+    message "Method not allowd"
+    error 405
+}
