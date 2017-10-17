@@ -17,6 +17,9 @@ class UrlMappings {
 
         "/user"( controller: "users",action : "createUser", method: 'POST')
         "/user/$userData"( controller: "users", action: "getUser", method:'GET')
+        "/user/login"( controller: "users", action: "login", method: 'POST')
+        "/user/logout"(controller: "users", action: "logout", method: 'POST')
+        "/user/associateAccount" (controller: "users", action: "associateAccount", method: 'POST')
 
         "405"(view: '/methodNotAllowed')
         "500"(view: '/error')

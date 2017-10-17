@@ -19,8 +19,6 @@ class User {
         dateCreated column: "dateCreated", sqlType:"datetime"
         lastUpdated column: "lastUpdated", sqlType:"datetime"
         version false
-
-
     }
     static constraints = {
     }

@@ -56,11 +56,35 @@ class UsersController {
     }
 
     def login(){
+        def userData = request.JSON
 
+        def result
+        def status
+        try{
+            result = usersService.authenticate(userData)
+            status = result?.status ?: 500
+        }catch (Exception e){
+            result = ['message':'There was a problem in the server '+e]
+            status = 500
+        }
+
+        render (result as JSON, status: status)
     }
 
     def logout(){
+        def userData = request.JSON
 
+        def result
+        def status
+        try{
+            result = usersService.logOut(userData)
+            status = result?.status ?: 500
+        }catch (Exception e){
+            result = ['message':'There was a problem in the server']
+            status = 500
+        }
+
+        render (result as JSON, status: status)
     }
 
     def associateAccount(){
