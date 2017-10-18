@@ -10,22 +10,19 @@ class UsersService {
 
     def getUser(int userId) {
         def user = findUserById(userId)
-        user.password = 'Cannot show password :)'
+        user.password = 'No se puede mostrar la password :)'
         return user
     }
 
     def getUser(String data){
         def user
-        println data
         if((data ==~ EMAIL_PATTERN)){
-            println 'email'
             user  = findUserByEmail(data)
         }else{
             user = findUserByUsername(data)
-            println user
         }
         if(user){
-            user.password = 'Cannot show password :)'
+            user.password = 'No se puede mostrar la password :)'
         }
         return user
     }
@@ -39,16 +36,16 @@ class UsersService {
 
 
         if(!userJson.keySet().containsAll(required)){
-            message =  required.join(",") + ' are requiered.'
+            message =  required.join(",") + '  son requeridos.'
             status = 400
         }else if(required.every{ userJson[it].size() <= 6}){
-            message = required.join(",") + ' must be greater than 4 characters.'
+            message = required.join(",") + ' tiene que ser mayor a 6 caracteres.'
             status = 400
         }else  if(getUser(userJson.username as String)){
-            message = 'Username already exist.'
+            message = 'El usuario ya existe.'
             status = 400
         }else if (!(userJson.email ==~ EMAIL_PATTERN)){
-            message = 'Wrong email format.'
+            message = 'Email incorrecto.'
             status = 400
         }else{
             def user = new User(
@@ -63,10 +60,10 @@ class UsersService {
 
             user.save(failOnError:true, flush:true, insert: true)
             if(user.errors.errorCount > 0){
-                message = 'There was a problem saving the user.'
+                message = 'Hubo un problema guardando el user.'
                 status = 500
             }else{
-                message = 'User '+userJson.username+' created.'
+                message = 'User '+userJson.username+' creado.'
                 status = 201
             }
         }
@@ -76,11 +73,11 @@ class UsersService {
 
 
     def authenticate(userData){
-        def response = ['status':500,'message':'Cannot log in.','token':null]
+        def response = ['status':500,'message':'No se pudo loguear.','token':null, 'user':null]
 
         if(!userData?.username || !userData?.password){
             response.status = 400
-            response.message = 'You need a username and password to login.'
+            response.message = 'Necesitas un username y password para poder ingresar.'
             return response
         }
         try{
@@ -90,9 +87,10 @@ class UsersService {
                 def session =findActiveSessionByUserId(user.id)  //TODO ver si le devolvemos el token cuando ya esta logged y con que status.
 
                 if(session){
-                    response.status = 401
-                    response.message = "User already logged."
+                    response.status = 200
+                    response.message = "Usuario ya logueado."
                     response.token = session.token
+                    response.user = user
                     return response
                 }
 
@@ -109,14 +107,15 @@ class UsersService {
                 )
                 newSession.save(failOnError:true, flush:true, insert: true)
                 if(newSession.errors.errorCount >0){
-                    response.message = 'There was a problem creating the session.'
+                    response.message = 'Hubo un problema creando la session.'
                     response.status = 500
                 }else{
                     response.token = newToken
+                    response.user = user
                 }
             }else{
                 response.status = 401
-                response.message = 'Wrong username or password.'
+                response.message = 'El username o password es incorrecto.'
             }
         }catch (Exception e){
             response.message = e
@@ -129,7 +128,7 @@ class UsersService {
         def response = ["status":400,"message":"Cannot logout."]
 
         if(!userData?.token){
-            response.message = "You should logout with a token."
+            response.message = "Token incorrecto."
             return response
         }
 
@@ -157,6 +156,16 @@ class UsersService {
         return response
     }
 
+    @Transactional
+    def getUserFromToken(token){
+        def session =findActiveSessionByToken(token)
+        if(session){
+            def user = getUser(session.userId)
+            return user
+        }else {
+            return null
+        }
+    }
 
     private def credentialsAreCorrect(userData){
         def results = User.withCriteria {

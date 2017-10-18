@@ -15,7 +15,7 @@ class User {
         name column: "name", length:70
         lastname column: "lastname", length:70
         username column: "username", length: 32
-        password column: "password", length: 32
+        password column: "password", length: 64
         dateCreated column: "dateCreated", sqlType:"datetime"
         lastUpdated column: "lastUpdated", sqlType:"datetime"
         version false

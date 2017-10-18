@@ -11,7 +11,7 @@ class UsersController {
     def getUser(){
         def userData = params.userData
         if(!userData){
-            throw new APIException("Please insert an userId")
+            throw new APIException("Por favor ingrese un userId, email o username")
         }
 
         def result
@@ -26,10 +26,10 @@ class UsersController {
                 result = ['user':getUser]
             }else{
                 status = 404
-                result = ['user':'No user with '+userData]
+                result = ['user':'No existe el usuario '+userData]
             }
         }catch (Exception e){
-            result = ['message':'there was a problem in the server :'+e]
+            result = ['message':'Hubo un problema en el servidor.']
             status = 500
         }
 
@@ -47,7 +47,7 @@ class UsersController {
             result = ['message':createResponse.message]
             status = createResponse.status
         }catch (Exception e){
-            result = ['message':'There was a problem in the server']
+            result = ['message':'Hubo un problema en el servidor.']
             status = 500
         }
 
@@ -64,7 +64,7 @@ class UsersController {
             result = usersService.authenticate(userData)
             status = result?.status ?: 500
         }catch (Exception e){
-            result = ['message':'There was a problem in the server '+e]
+            result = ['message':'Hubo un problema en el servidor.', 'user':null]
             status = 500
         }
 
@@ -80,15 +80,12 @@ class UsersController {
             result = usersService.logOut(userData)
             status = result?.status ?: 500
         }catch (Exception e){
-            result = ['message':'There was a problem in the server']
+            result = ['message':'Hubo un problema en el servidor.']
             status = 500
         }
 
         render (result as JSON, status: status)
     }
 
-    def associateAccount(){
-
-    }
 
 }

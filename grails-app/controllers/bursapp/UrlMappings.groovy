@@ -3,14 +3,7 @@ package bursapp
 class UrlMappings {
 
     static mappings = {
-        /*
-        delete "/$controller/$id(.$format)?"(action:"delete")
-        get "/$controller(.$format)?"(action:"index")
-        get "/$controller/$id(.$format)?"(action:"show")
-        post "/$controller(.$format)?"(action:"save")
-        put "/$controller/$id(.$format)?"(action:"update")
-        patch "/$controller/$id(.$format)?"(action:"patch")
-        */
+
 
         "/"(controller: 'application', action:'index')
         "/ping"(controller: 'ping', action:'ping')
@@ -19,7 +12,10 @@ class UrlMappings {
         "/user/$userData"( controller: "users", action: "getUser", method:'GET')
         "/user/login"( controller: "users", action: "login", method: 'POST')
         "/user/logout"(controller: "users", action: "logout", method: 'POST')
-        "/user/associateAccount" (controller: "users", action: "associateAccount", method: 'POST')
+
+        "/user/associateAccount" (controller: "accounts", action: "associateAccount", method: 'POST')
+        "/user/getAssociatedAccounts"(controller: "accounts", action: "getAssociatedAccounts", method: 'POST')
+        "/user/removeAssociatedAccount"(controller: "accounts", action: "removeAssociatedAccount", method: 'POST')
 
         "405"(view: '/methodNotAllowed')
         "500"(view: '/error')
