@@ -18,7 +18,6 @@ class BootStrap {
                 break;
             case Environment.PRODUCTION:
                 result = 'now running in PROD mode.'
-                seedProdData()
                 break;
         }
         println "current environment: $Environment.current"
