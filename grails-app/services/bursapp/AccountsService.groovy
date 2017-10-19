@@ -69,7 +69,7 @@ class AccountsService {
             associatedAccounts.each{
                 def account = higyrusClient.getAccount(it.accountId)
                 if(account){
-                    response.account_higyrus.add(account)
+                    response.account_higyrus.add(account.response)
                 }
             }
             if(response.account_higyrus.size() == 0){
