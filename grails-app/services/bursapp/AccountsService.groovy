@@ -28,6 +28,7 @@ class AccountsService {
                 if(isAlreadyAssociated){
                     response.status = 200
                     response.message = 'Cuenta ya asociada.'
+					response.account_higyrus.add(higyrusAccount)
                     return response
                 }
 

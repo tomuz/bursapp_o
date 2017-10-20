@@ -44,7 +44,7 @@ class UsersController {
         def status = 200
         try{
             def createResponse = usersService.createUser(userJson)
-            result = ['message':createResponse.message]
+            result = ['message':createResponse.message,'status':createResponse.status]
             status = createResponse.status
         }catch (Exception e){
             result = ['message':'Hubo un problema en el servidor.']
