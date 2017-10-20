@@ -10,7 +10,7 @@ class UsersService {
 
     def getUser(int userId) {
         def user = findUserById(userId)
-        user.password = 'No se puede mostrar la password :)'
+        //user.password = 'No se puede mostrar la password :)'
         return user
     }
 
@@ -21,9 +21,9 @@ class UsersService {
         }else{
             user = findUserByUsername(data)
         }
-        if(user){
-            user.password = 'No se puede mostrar la password :)'
-        }
+        //if(user){
+        //    user.password = 'No se puede mostrar la password :)'
+        //}
         return user
     }
 
