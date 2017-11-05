@@ -31,6 +31,10 @@ endpoints:
 
 ---
 grails:
+    config:
+        locations:
+            - ApiCallsJsonConfig.groovy
+            - Config.groovy
     mime:
         disable:
             accept:
@@ -64,6 +68,9 @@ grails:
         defaultScope: singleton
     converters:
         encoding: UTF-8
+        domain:
+            include:
+                class: true
 
 ---
 hibernate:

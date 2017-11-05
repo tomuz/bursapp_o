@@ -41,9 +41,6 @@ class AccountsService {
                         userId: user.id,
                         status: "ASSOCIATED"
                 )
-                println ('userId:'+ user.id)
-                println ('accountId:'+newAssociation.accountId)
-                println ('newAssociation'+newAssociation)
 
                 newAssociation.save(failOnError:false, flush:true, insert: true)
                 if(newAssociation.errors.errorCount >0){
@@ -69,7 +66,7 @@ class AccountsService {
 
             associatedAccounts.each{
                 def account = higyrusClient.getAccount(it.accountId)
-                if(account){
+                if(account.status == 200){
                     response.account_higyrus.add(account.response)
                 }
             }

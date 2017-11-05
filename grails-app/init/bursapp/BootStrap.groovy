@@ -1,9 +1,11 @@
 package bursapp
 
 import grails.util.Environment
+import grails.core.GrailsApplication
+
 
 class BootStrap {
-
+    GrailsApplication grailsApplication
     def init = { servletContext ->
 
         def result = '################## running in UNCLEAR mode.'
