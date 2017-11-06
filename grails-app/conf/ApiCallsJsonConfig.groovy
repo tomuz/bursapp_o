@@ -175,14 +175,39 @@
                 [
                     {
                         "id":1,
-                        "name":"Fondo 1"
+                        "name":"CAFCI 1542"
                     },
                     {
                         "id":2,
-                        "name":"Fondo 2"
+                        "name":"CAFCI 803"
                     }
                 ]
         }
+    """
+}
+
+'/higyrus/funds/1'{
+    status = 200
+    error = []
+    json = """
+
+        {
+            "id":1,
+            "name":"CAFCI 1542"
+        }
+
+    """
+}
+'/higyrus/funds/2'{
+    status = 200
+    error = []
+    json = """
+
+        {
+            "id":2,
+            "name":"CAFCI 803"
+        }
+
     """
 }
 

@@ -54,6 +54,7 @@ class UsersService {
                     email: userJson.email,
                     name: userJson?.name?:"",
                     lastname: userJson?.lastname?:"",
+                    type: userJson?.type?:"",
                     dateCreated: new Date(),
                     lastUpdated: new Date()
             )

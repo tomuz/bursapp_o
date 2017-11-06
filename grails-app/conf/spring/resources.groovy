@@ -1,4 +1,5 @@
 import bursapp.AccountsService
+import bursapp.MessagesService
 import bursapp.OperationsService
 import bursapp.UsersService
 import bursapp.clients.HigyrusClient
@@ -21,6 +22,8 @@ beans = {
 
     usersService (UsersService) {}
 
+    messagesService (MessagesService){}
+
     accountsService (AccountsService){
         higyrusClient = ref('higyrusClient')
     }
@@ -28,7 +31,7 @@ beans = {
     operationsService (OperationsService){
         higyrusUrl = grailsApplication.config.getProperty('higyrus.baseUrl')
         restService = ref('restService')
-
+        messagesService = ref('messagesService')
     }
 
 

@@ -3,12 +3,13 @@ package bursapp
 /**
  * Created by tbuchaillot on 5/11/17.
  */
+
 class Operation {
 
     int id
     int fundId
     int userId
-    int accountId
+    int bankAccountId
     String type
     String status
     Double amount
@@ -19,7 +20,7 @@ class Operation {
     static mapping = {
         id column: "id"
         userId column: "user_id"
-        accountId column: "account_id"
+        bankAccountId column: "bank_account_id"
         fundId column: "fund_id"
         operatorId column: "operator_id"
         amount column: "amount"
@@ -33,4 +34,16 @@ class Operation {
     static constraints = {
 
     }
+    public Map asMap() {
+        def map = [:] as HashMap
+        this.class.getDeclaredFields().each {
+            if (it.modifiers == java.lang.reflect.Modifier.PRIVATE) {
+                if (it.name != 'org_grails_datastore_gorm_GormValidateable__errors'){
+                    map.put(it.name, this[it.name])
+                }
+            }
+        }
+        return map
+    }
+
 }
