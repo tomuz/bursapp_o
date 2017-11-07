@@ -9,6 +9,7 @@ class UrlMappings {
         "/ping"(controller: 'ping', action:'ping')
 
         "/user"( controller: "users",action : "createUser", method: 'POST')
+        "/operator"( controller: "users",action : "createOperator", method: 'POST')
         "/user/$userData"( controller: "users", action: "getUser", method:'GET')
         "/user/login"( controller: "users", action: "login", method: 'POST')
         "/user/logout"(controller: "users", action: "logout", method: 'POST')
@@ -31,7 +32,13 @@ class UrlMappings {
         "/operations/pending"(controller:"operations", action: "getPendingOperations", method: 'POST')
         "/operations/date"(controller:"operations", action: "getOperationsByDate", method: 'POST')
 
+        "/operations/changeStatus"(controller:"operations", action: "changeOperationStatus", method: 'POST')
+        "/operations/status"(controller:"operations", action: "createOperationStatus", method: 'POST')
+        "/operations/getStatuses"(controller:"operations", action: "getOperationStatuses", method: 'POST')
+
         "/messages"(controller:"messages", action: "getMessages", method: 'POST')
+
+        "/ticket"(controller:"ticket", action: "createTicket", method: 'POST')
 
         "405"(view: '/methodNotAllowed')
         "500"(view: '/error')

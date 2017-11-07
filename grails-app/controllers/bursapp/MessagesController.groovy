@@ -22,7 +22,7 @@ class MessagesController {
                 if(!json?.bankAccountId){
                     throw  new BadRequestException('Es necesario el bank_account_id.')
                 }
-                result = messagesService.getMessages(user,json?.bankAccountId)
+                result = messagesService.getMessages(user.id,json?.bankAccountId)
                 status = result.status
             }else{
                 result = ['message':'No hay usuarios activos con esa session.']

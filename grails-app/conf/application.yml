@@ -93,6 +93,24 @@ environments:
             username: sa
             password: ''
             url: jdbc:mysql://localhost:3306/bursapp
+            properties :
+                maxActive : 50
+                maxIdle : 25
+                minIdle : 1
+                initialSize : 1
+
+                numTestsPerEvictionRun : 3
+                maxWait : 10000
+
+                testOnBorrow : true
+                testWhileIdle : true
+                testOnReturn : true
+
+                validationQuery : "select now()"
+
+                minEvictableIdleTimeMillis : 1000 * 60 * 5
+                timeBetweenEvictionRunsMillis : 1000 * 60 * 5
+
     test:
         dataSource:
             dbCreate: none
@@ -100,10 +118,44 @@ environments:
             username: sa
             password: ''
             url: jdbc:mysql://localhost:3306/bursapp
+            properties :
+                maxActive : 50
+                maxIdle : 25
+                minIdle : 1
+                initialSize : 1
+
+                numTestsPerEvictionRun : 3
+                maxWait : 10000
+
+                testOnBorrow : true
+                testWhileIdle : true
+                testOnReturn : true
+
+                validationQuery : "select now()"
+
+                minEvictableIdleTimeMillis : 1000 * 60 * 5
+                timeBetweenEvictionRunsMillis : 1000 * 60 * 5
     production:
-       dataSource:
-           dbCreate: none
-           driverClassName: com.mysql.jdbc.Driver
-           username: root
-           password: 'root'
-           url: jdbc:mysql://localhost:3306/bursapp
+        dataSource:
+            dbCreate: none
+            driverClassName: com.mysql.jdbc.Driver
+            username: root
+            password: 'root'
+            url: jdbc:mysql://localhost:3306/bursapp
+            properties :
+                maxActive : 50
+                maxIdle : 25
+                minIdle : 1
+                initialSize : 1
+
+                numTestsPerEvictionRun : 3
+                maxWait : 10000
+
+                testOnBorrow : true
+                testWhileIdle : true
+                testOnReturn : true
+
+                validationQuery : "select now()"
+
+                minEvictableIdleTimeMillis : 1000 * 60 * 5
+                timeBetweenEvictionRunsMillis : 1000 * 60 * 5

@@ -43,7 +43,29 @@ class UsersController {
         def result
         def status = 200
         try{
+            userJson.type = "NORMAL"
             def createResponse = usersService.createUser(userJson)
+
+            result = ['message':createResponse.message,'status':createResponse.status]
+            status = createResponse.status
+        }catch (Exception e){
+            result = ['message':'Hubo un problema en el servidor.']
+            status = 500
+        }
+
+        render (result as JSON, status: status)
+
+    }
+
+    def createOperator(){
+        def userJson = request.JSON
+
+        def result
+        def status = 200
+        try{
+            userJson.type = "OPERATOR"
+            def createResponse = usersService.createUser(userJson)
+
             result = ['message':createResponse.message,'status':createResponse.status]
             status = createResponse.status
         }catch (Exception e){

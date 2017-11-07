@@ -7,12 +7,12 @@ import bursapp.operations.OperationsStatus
  */
 class MessagesService {
 
-    def getMessages(user, bankAccountId){
+    def getMessages(userId, bankAccountId){
         def response = ["status":500,"message":"No se pudieron obtener los mensajes.","messages": []]
 
         try{
             def messages = Message.withCriteria {
-                eq('userId',user.id)
+                eq('userId',userId)
                 eq('bankAccountId',bankAccountId)
 
                 order("insertDate", "desc")
@@ -30,10 +30,10 @@ class MessagesService {
 
     }
 
-    def saveMessage(user, bankAccountId, message){
+    def saveMessage(userId, bankAccountId, message){
         try{
             def newMessage = new Message(
-                    userId: user.id,
+                    userId: userId,
                     bankAccountId: bankAccountId,
                     message: message,
                     insertDate: new Date()

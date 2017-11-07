@@ -1,6 +1,7 @@
 package bursapp
 
 import Exceptions.BadRequestException
+import Exceptions.NotAllowedException
 import bursapp.operations.OperationsType
 
 /**
@@ -206,6 +207,104 @@ class OperationsController {
         render (result as JSON, status: status)
     }
 
+
+    def changeOperationStatus(){
+        def json = request.JSON
+        def result
+        def status = 400
+        try{
+            def user = usersService.getUserFromToken(json.token)
+            if(user){
+                if(user.type != "OPERATOR"){
+                    throw  new NotAllowedException("El usuario no tiene permisos para realizar esta operacion.")
+                }else if(!json?.operationId || !json?.status ){
+                    throw new BadRequestException('Es necesario el numero de operacion y el nuevo status.')
+                }
+
+
+                result = operationsService.changeOperationStatus(user , json?.operationId, json?.status)
+                status = result.status
+            }else{
+                result = ['message':'No hay usuarios activos con esa session.']
+                status = 404
+            }
+
+        }catch (NotAllowedException ex){
+            result = ['message':ex.message]
+            status = ex.status
+        }catch (BadRequestException br){
+            result = ['message':br.message]
+            status = br.status
+        }catch (Exception e){
+            result = ['message':'Hubo un problema en el servidor.']
+            status = 500
+        }
+        render (result as JSON, status: status)
+    }
+
+    def createOperationStatus(){
+        def json = request.JSON
+        def result
+        def status = 400
+        try{
+            def user = usersService.getUserFromToken(json.token)
+            if(user){
+                if(user.type != "OPERATOR"){
+                    throw  new NotAllowedException("El usuario no tiene permisos para realizar esta operacion.")
+                }else if(!json?.bank_account_id || !json?.status ){
+                    throw new BadRequestException('Es necesario el numero de cuenta y el nuevo status.')
+                }
+                result = operationsService.createOperationStatus(user,json?.bank_account_id, json?.status)
+                status = result.status
+            }else{
+                result = ['message':'No hay usuarios activos con esa session.']
+                status = 404
+            }
+
+        }catch (NotAllowedException ex){
+            result = ['message':ex.message]
+            status = ex.status
+        }catch (BadRequestException br){
+            result = ['message':br.message]
+            status = br.status
+        }catch (Exception e){
+            result = ['message':'Hubo un problema en el servidor.']
+            status = 500
+        }
+        render (result as JSON, status: status)
+    }
+
+    def getOperationStatuses(){
+        def json = request.JSON
+        def result
+        def status = 400
+        try{
+            def user = usersService.getUserFromToken(json.token)
+            if(user){
+                if(user.type != "OPERATOR"){
+                    throw  new NotAllowedException("El usuario no tiene permisos para realizar esta operacion.")
+                }else if(!json?.bank_account_id ){
+                    throw new BadRequestException('Es necesario el numero de cuenta.')
+                }
+                result = operationsService.getOperationStatuses(user,json?.bank_account_id)
+                status = result.status
+            }else{
+                result = ['message':'No hay usuarios activos con esa session.']
+                status = 404
+            }
+
+        }catch (NotAllowedException ex){
+            result = ['message':ex.message]
+            status = ex.status
+        }catch (BadRequestException br){
+            result = ['message':br.message]
+            status = br.status
+        }catch (Exception e){
+            result = ['message':'Hubo un problema en el servidor.']
+            status = 500
+        }
+        render (result as JSON, status: status)
+    }
 
     private def checkNewOperation(json){
         def requiredFields = ['fund_id','bank_account_id','amount','type']

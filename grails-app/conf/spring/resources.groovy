@@ -1,4 +1,5 @@
 import bursapp.AccountsService
+import bursapp.ConsultasService
 import bursapp.MessagesService
 import bursapp.OperationsService
 import bursapp.UsersService
@@ -26,6 +27,10 @@ beans = {
 
     accountsService (AccountsService){
         higyrusClient = ref('higyrusClient')
+    }
+
+    consultasService(ConsultasService){
+        messagesService = ref('messagesService')
     }
 
     operationsService (OperationsService){
