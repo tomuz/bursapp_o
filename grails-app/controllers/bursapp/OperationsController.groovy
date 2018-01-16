@@ -217,12 +217,12 @@ class OperationsController {
             if(user){
                 if(user.type != "OPERATOR"){
                     throw  new NotAllowedException("El usuario no tiene permisos para realizar esta operacion.")
-                }else if(!json?.operationId || !json?.status ){
+                }else if(!json?.operation_id || !json?.status ){
                     throw new BadRequestException('Es necesario el numero de operacion y el nuevo status.')
                 }
 
 
-                result = operationsService.changeOperationStatus(user , json?.operationId, json?.status)
+                result = operationsService.changeOperationStatus(user , json?.operation_id, json?.status)
                 status = result.status
             }else{
                 result = ['message':'No hay usuarios activos con esa session.']
@@ -307,9 +307,11 @@ class OperationsController {
     }
 
     private def checkNewOperation(json){
-        def requiredFields = ['fund_id','bank_account_id','amount','type']
+        def requiredFields = ['fund_id','bank_account_id','type']
         def hasRequired = true
         requiredFields.each {  hasRequired = hasRequired && json.containsKey(it) }
+
+        hasRequired = hasRequired && (json.containsKey('amount') || json.containsKey('rescue_all') )
 
         if(!hasRequired){
             throw new BadRequestException('Para ejecutar una operacion se necesitan los campos:'+requiredFields.join(','))

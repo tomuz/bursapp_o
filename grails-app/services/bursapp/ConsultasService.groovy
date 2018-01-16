@@ -5,7 +5,9 @@ package bursapp
  */
 class ConsultasService {
     def messagesService
-    def getConsultas(){
+
+    def getConsultas(userId){
+
 
     }
 

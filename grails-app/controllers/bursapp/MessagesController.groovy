@@ -19,10 +19,10 @@ class MessagesController {
         try{
             def user = usersService.getUserFromToken(json.token)
             if(user){
-                if(!json?.bankAccountId){
+                if(!json?.bank_account_id){
                     throw  new BadRequestException('Es necesario el bank_account_id.')
                 }
-                result = messagesService.getMessages(user.id,json?.bankAccountId)
+                result = messagesService.getMessages(user.id,json?.bank_account_id)
                 status = result.status
             }else{
                 result = ['message':'No hay usuarios activos con esa session.']

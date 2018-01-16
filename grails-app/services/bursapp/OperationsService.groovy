@@ -1,5 +1,6 @@
 package bursapp
 
+import Exceptions.APIException
 import Exceptions.BadRequestException
 import bursapp.operations.OperationsStatus
 import bursapp.operations.OperationsType
@@ -10,6 +11,7 @@ import bursapp.operations.OperationsType
 class OperationsService {
     def restService
     def messagesService
+    def higyrusClient
     def higyrusUrl
 
     def getFunds(){
@@ -37,9 +39,14 @@ class OperationsService {
         def response = ["status":500,"message":"No se pudo crear la operacion.","operation_id": null]
 
         try{
-
+            def amount = 0
             if(rescueAll){
-                def amount = restService.getAllAvia
+                amount = higyrusClient.getAllAvailableMoney(operation_data.fund_id,operation_data.bank_account_id)
+                if(amount == 0){
+                    throw new APIException('Hubo un problema trayendo el monto')
+                }
+            }else {
+                amount = operation_data.amount
             }
 
             def operation = new Operation(
@@ -47,7 +54,7 @@ class OperationsService {
                     userId: user.id,
                     bankAccountId: operation_data.bank_account_id,
                     operatorId: 0,
-                    amount: operation_data.amount,
+                    amount: amount,
                     type: operation_data.type,
                     insertDate: new Date(),
                     lastUpdate: new Date(),
@@ -77,6 +84,9 @@ class OperationsService {
                 messagesService.saveMessage(user.id,operation_data.bank_account_id,msg)
 
             }
+        }catch (APIException ae){
+            response.message = ae.message
+            response.status = 400
         }catch (Exception e){
             println e
             return  response

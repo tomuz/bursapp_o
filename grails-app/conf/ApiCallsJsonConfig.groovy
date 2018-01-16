@@ -211,6 +211,28 @@
     """
 }
 
+
+'/higyrus/getAvailableMoney&body=[fundId:1, bankAccountId:*]' {
+    status = 200
+    error = []
+    json = """
+            {
+                'money':10000.10
+            }
+    """
+}
+
+'/higyrus/getAvailableMoney&body=[fundId:2, bankAccountId:*]' {
+    status = 200
+    error = []
+    json = """
+            {
+                'money':528.10
+            }
+    """
+}
+
+
 '/' {
     status = 200
     error = []

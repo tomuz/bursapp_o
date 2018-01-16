@@ -56,4 +56,20 @@ class HigyrusClient {
         }
         return response
     }
+
+    def getAllAvailableMoney(fundId,bankAccountId){
+        def money = 0
+
+        try{
+
+            def jsonData = ['fundId':fundId, 'bankAccountId':bankAccountId]
+
+            def data = restService.postData(higyrusUrl+'getAvailableMoney',jsonData)
+            money = data?.money ?: 0
+        }catch (Exception e){
+            println 'exception ::'+e
+            return money
+        }
+        return money
+    }
 }

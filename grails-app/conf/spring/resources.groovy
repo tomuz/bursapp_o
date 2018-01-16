@@ -34,6 +34,7 @@ beans = {
     }
 
     operationsService (OperationsService){
+        higyrusClient = ref('higyrusClient')
         higyrusUrl = grailsApplication.config.getProperty('higyrus.baseUrl')
         restService = ref('restService')
         messagesService = ref('messagesService')
